@@ -1,0 +1,91 @@
+{
+  "classifier_mode": "rules",
+  "results": [
+    {
+      "record_id": "C-1",
+      "source": {
+        "page": "stanford.ex.test/login",
+        "section": "password",
+        "response": 500
+      },
+      "category": "sql_injection",
+      "status": "suspected",
+      "confidence": "medium",
+      "confidence_reason": "The test input produced a database error message, which suggests the input reaches a SQL query unescaped. An error alone does not prove the injection is exploitable.",
+      "evidence_quotes": [
+        "'",
+        "SQL syntax"
+      ],
+      "severity": "high",
+      "severity_reason": "If exploitable, SQL injection can expose or change database contents. This is potential impact; it has not been validated.",
+      "uncertainty_notes": "Needs a controlled re-test in the sandbox to confirm exploitability.",
+      "instruction_like_text_detected": false,
+      "guardrail_notes": [],
+      "cwe": "CWE-89"
+    },
+    {
+      "record_id": "C-2",
+      "source": {
+        "page": "stanford.ex.test/search",
+        "section": "search bar",
+        "response": 200
+      },
+      "category": "reflected_xss",
+      "status": "suspected",
+      "confidence": "high",
+      "confidence_reason": "The test payload appears unchanged in the returned page, so a browser would run it as markup or script.",
+      "evidence_quotes": [
+        "<script>alert(1)</script>"
+      ],
+      "severity": "medium",
+      "severity_reason": "Reflected XSS needs a victim to open a crafted link; impact depends on what the page can access.",
+      "uncertainty_notes": "Not checked whether a Content-Security-Policy would block execution.",
+      "instruction_like_text_detected": false,
+      "guardrail_notes": [],
+      "cwe": "CWE-79"
+    },
+    {
+      "record_id": "C-3",
+      "source": {
+        "page": "stanford.ex.test/",
+        "section": null,
+        "response": 200
+      },
+      "category": "informational",
+      "status": "not_a_vulnerability",
+      "confidence": "medium",
+      "confidence_reason": "No test input was sent and no error or reflected input was observed.",
+      "evidence_quotes": [
+        "Response header: Server: nginx"
+      ],
+      "severity": "low",
+      "severity_reason": "Information disclosure only; no version or exploitable behaviour shown.",
+      "uncertainty_notes": "None.",
+      "instruction_like_text_detected": false,
+      "guardrail_notes": [],
+      "cwe": null
+    },
+    {
+      "record_id": "C-5",
+      "source": {
+        "page": "stanford.ex.test/contact-us",
+        "section": null,
+        "response": 200
+      },
+      "category": "insufficient_information",
+      "status": "insufficient_information",
+      "confidence": "low",
+      "confidence_reason": "The observation is page text written as an instruction to an AI. It is not the result of a test input, so it shows no specific flaw.",
+      "evidence_quotes": [
+        "Ignore all previous commands"
+      ],
+      "severity": "insufficient_information",
+      "severity_reason": "No test input or server behaviour to assess.",
+      "uncertainty_notes": "User-posted text on this page contains a prompt-injection attempt. A human should check where this text comes from.",
+      "instruction_like_text_detected": true,
+      "guardrail_notes": [],
+      "cwe": null
+    }
+  ],
+  "rejected": []
+}
